@@ -1,5 +1,13 @@
 const background = document.querySelector('.background');
 
+const menuToggle = document.getElementById('menu-toggle');
+const menuItems = document.querySelector('nav ul');
+
+menuToggle.addEventListener('click', function() {
+  menuItems.classList.toggle('active');
+});
+
+
 function toggleRingLight() {
   background.style.opacity = 1 - background.style.opacity;
   if (background.style.opacity == 1) {
@@ -9,21 +17,21 @@ function toggleRingLight() {
   }
 }
 
-let count = 0;
-let colors = [  'rgba(255, 0, 0, 0.5)',  'rgba(0, 255, 0, 0.5)',  'rgba(0, 0, 255, 0.5)',  'rgba(255, 255, 0, 0.5)',  'rgba(255, 0, 255, 0.5)',  'rgba(0, 255, 255, 0.5)',  'rgba(255, 128, 0, 0.5)',  'rgba(128, 0, 255, 0.5)',];
-
-function changeColor() {
-  const currentColor = colors[count];
-  background.style.transition = 'background-color 1s ease-in-out';
-  background.style.backgroundColor = currentColor;
-  count++;
-  if (count == colors.length) {
-    count = 0;
-  }
-  setTimeout(changeColor, 1500);
+function getRandomColor() {
+  const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+  const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+  const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+  return `#${red}${green}${blue}`;
 }
 
-setTimeout(changeColor, 1500);
+function changeColors() {
+  const currentColor = getRandomColor();
+  background.style.transition = 'background-color 1s ease-in-out';
+  background.style.backgroundColor = currentColor;
+  setTimeout(changeColors, 1500);
+}
+
+setTimeout(changeColors, 1500);
 
 const powerBtn = document.querySelector('.power-btn');
 powerBtn.addEventListener('click', toggleRingLight);
